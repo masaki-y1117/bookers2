@@ -14,3 +14,14 @@
  *= require_self
  */
  @import "bootstrap";
+
+body {
+  background-image: image-url("rugby.jpg");
+  background-size: cover;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.table {
+  color: #fff;
+}
