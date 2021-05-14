@@ -15,17 +15,17 @@ class User < ApplicationRecord
   def follow(user_id)
     follower.create(followed_id: user_id)
   end
-  
+
   #ユーザーのフォローを外す
   def unfollow(user_id)
     follower.find_by(followed_id: user_id).destroy
   end
-  
+
   #フォローしていればtrueを返す
   def following?(user)
     following_user.include?(user)
   end
-  
+
   def self.search_for(content, method)
     if method == 'perfect'
       User.where(name: content)
@@ -37,7 +37,18 @@ class User < ApplicationRecord
       User.where('name LIKE ?', '%' + content + '%')
     end
   end
-  
+
+  include JpPrefecture
+  jp_prefecture :prefecture_code
+
+  def prefecture_name
+    JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
+  end
+
+  def prefecture_name=(prefecture_name)
+    self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
+  end
+
   attachment :profile_image, destroy: false
   validates :name, length: {maximum: 20, minimum: 2}, uniqueness: true
   validates :introduction, length: {maximum: 50}

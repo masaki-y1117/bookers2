@@ -11,8 +11,10 @@
   <body>
     <%= render 'layouts/header' %>
     <main>
-      <%= render 'layouts/search' %>
-      <p id="notice"><%= notice %></p>
+      <% if user_signed_in? %>
+        <%= render 'layouts/search' %>
+        <p id="notice"><%= notice %></p>
+      <% end %>
     </main>
     <%= yield %>
     <%= render 'layouts/footer' %>
