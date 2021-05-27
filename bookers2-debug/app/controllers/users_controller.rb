@@ -1,12 +1,6 @@
 class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:update]
   
-  def create
-    @user = params[:user]
-    if @user.save
-      UserMailer.with(user: @user).welcome_mail.deliver_later
-    end
-  end
 
   def show
     @user = User.find(params[:id])
